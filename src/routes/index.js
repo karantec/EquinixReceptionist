@@ -32,16 +32,16 @@ const routes = [
     component: Dashboard,
   },
   {
-    path: "/receptionist",
+    path: "/companies",
     component: Receptionlist,
   },
   {
-    path: "/internal-engineer", // Add this if you need a separate page for internal engineer
+    path: "/visitor", // Add this if you need a separate page for internal engineer
     component: InternalEngineer, // You can use the same component or create a new one
   },
 
   {
-    path: "/cabinetupdates", // Add this if you need a separate page for internal engineer
+    path: "/idmanagment", // Add this if you need a separate page for internal engineer
     component: Cabinates, // You can use the same component or create a new one
   },
   // {

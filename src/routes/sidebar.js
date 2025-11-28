@@ -30,26 +30,19 @@ const routes = [
   },
 
   {
-    path: "", //no url needed as this has submenu
-    icon: <DocumentDuplicateIcon className={`${iconClasses} inline`} />, // icon component
-    name: "Credential Management", // name that appear in Sidebar
-    submenu: [
-      {
-        path: "/app/receptionist", // Added /app prefix
-        icon: <ArrowRightOnRectangleIcon className={submenuIconClasses} />,
-        name: "Receptionist Credentials",
-      },
-      {
-        path: "/app/internal-engineer", // Changed from /register and added /app prefix
-        icon: <UserIcon className={submenuIconClasses} />,
-        name: "Internal Engineer",
-      },
-    ],
+    path: "/app/companies", // Added /app prefix
+    icon: <ArrowRightOnRectangleIcon className={submenuIconClasses} />,
+    name: "Companies",
   },
   {
-    path: "/app/cabinetUpdates",
+    path: "/app/visitor", // Changed from /register and added /app prefix
+    icon: <UserIcon className={submenuIconClasses} />,
+    name: "Vistor",
+  },
+  {
+    path: "/app/idmanagment",
     icon: <Squares2X2Icon className={iconClasses} />,
-    name: "CabinetUpdates",
+    name: "IDManagement",
   },
   // {
   //   path: "", //no url needed as this has submenu
