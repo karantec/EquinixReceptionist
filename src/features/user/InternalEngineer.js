@@ -49,6 +49,137 @@ function Visitors() {
 
   return (
     <div className="min-h-screen bg-gray-50 p-6">
+      {/* QR Generator Modal */}
+      {showQRModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg shadow-xl w-full max-w-sm mx-4">
+            <div className="flex items-center justify-between p-4 border-b border-gray-200">
+              <h2 className="text-lg font-semibold text-gray-800">
+                QR Generator
+              </h2>
+              <button
+                onClick={() => setShowQRModal(false)}
+                className="text-gray-400 hover:text-gray-600"
+              >
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
+            </div>
+            <div className="p-6">
+              <div className="flex justify-center mb-6">
+                <div className="w-24 h-24 bg-red-500 rounded-full flex items-center justify-center">
+                  <svg
+                    className="w-12 h-12 text-white"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                    />
+                  </svg>
+                </div>
+              </div>
+
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-xs text-gray-500 mb-1">
+                    Name
+                  </label>
+                  <input
+                    type="text"
+                    value={qrFormData.name}
+                    onChange={(e) =>
+                      setQrFormData({ ...qrFormData, name: e.target.value })
+                    }
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-red-500"
+                    placeholder="Enter name"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs text-gray-500 mb-1">
+                    Contact Number
+                  </label>
+                  <input
+                    type="text"
+                    value={qrFormData.contact}
+                    onChange={(e) =>
+                      setQrFormData({ ...qrFormData, contact: e.target.value })
+                    }
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-red-500"
+                    placeholder="Enter contact"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs text-gray-500 mb-1">
+                    ID Number
+                  </label>
+                  <input
+                    type="text"
+                    value={qrFormData.idNumber}
+                    onChange={(e) =>
+                      setQrFormData({ ...qrFormData, idNumber: e.target.value })
+                    }
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-red-500"
+                    placeholder="Enter ID"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs text-gray-500 mb-1">
+                    Company
+                  </label>
+                  <select
+                    value={qrFormData.company}
+                    onChange={(e) =>
+                      setQrFormData({ ...qrFormData, company: e.target.value })
+                    }
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-red-500 bg-white"
+                  >
+                    <option value="">Select a Company</option>
+                    <option value="Monchrome Infrastructures">
+                      Monchrome Infrastructures
+                    </option>
+                    <option value="SRP Infotech">SRP Infotech</option>
+                    <option value="Hindustan Petroleum">
+                      Hindustan Petroleum
+                    </option>
+                    <option value="Samsung Private Limited">
+                      Samsung Private Limited
+                    </option>
+                    <option value="Auccate">Auccate</option>
+                    <option value="Design.newagency">Design.newagency</option>
+                  </select>
+                </div>
+              </div>
+
+              <button
+                onClick={handleQRSubmit}
+                className="w-full mt-6 bg-red-500 hover:bg-red-600 text-white py-2.5 rounded-md text-sm font-medium"
+              >
+                Send QR Code
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Header */}
       <div className="mb-6">
         <h1 className="text-2xl font-semibold text-gray-800">Visitors</h1>
