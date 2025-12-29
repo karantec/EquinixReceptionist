@@ -14,12 +14,25 @@ function Visitors() {
   const [currentPage, setCurrentPage] = useState(1);
   const totalPages = 6;
   const [showQRModal, setShowQRModal] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [showAddCompany, setShowAddCompany] = useState(false);
+  const [newCompany, setNewCompany] = useState("");
+
   const [qrFormData, setQrFormData] = useState({
     name: "",
     contact: "",
     idNumber: "",
     company: "",
   });
+
+  const [companies, setCompanies] = useState([
+    "Muenchener Rueckve...",
+    "Reliance Private Limited",
+    "Hindustan Petroleum",
+    "Samsung Private Limited",
+    "Avocado",
+    "Designverseagency",
+  ]);
 
   const chartData = [
     20, 30, 25, 35, 30, 40, 35, 45, 40, 50, 45, 55, 50, 60, 55, 65,
@@ -36,30 +49,56 @@ function Visitors() {
     setShowQRModal(true);
   };
 
-  const handleQRSubmit = () => {
-    console.log("Sending QR Code:", qrFormData);
-    setShowQRModal(false);
+  const handleCompanySelect = (company) => {
+    setQrFormData({ ...qrFormData, company: company });
+    setIsDropdownOpen(false);
+  };
+
+  const handleAddCompany = () => {
+    if (newCompany.trim()) {
+      setCompanies([...companies, newCompany]);
+      setQrFormData({ ...qrFormData, company: newCompany });
+      setNewCompany("");
+      setShowAddCompany(false);
+      setIsDropdownOpen(false);
+    }
+  };
+
+  const handleInputChange = (e) => {
     setQrFormData({
-      name: "",
-      contact: "",
-      idNumber: "",
-      company: "",
+      ...qrFormData,
+      [e.target.name]: e.target.value,
     });
+  };
+
+  const handleSubmitQR = () => {
+    if (
+      qrFormData.name &&
+      qrFormData.contact &&
+      qrFormData.idNumber &&
+      qrFormData.company
+    ) {
+      alert(
+        `QR Code sent successfully!\n\nName: ${qrFormData.name}\nContact: ${qrFormData.contact}\nID: ${qrFormData.idNumber}\nCompany: ${qrFormData.company}`
+      );
+      setShowQRModal(false);
+    } else {
+      alert("Please fill all fields");
+    }
   };
 
   return (
     <div className="min-h-screen bg-gray-50 p-6">
       {/* QR Generator Modal */}
       {showQRModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg shadow-xl w-full max-w-sm mx-4">
-            <div className="flex items-center justify-between p-4 border-b border-gray-200">
-              <h2 className="text-lg font-semibold text-gray-800">
-                QR Generator
-              </h2>
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md p-8 relative">
+            {/* Header */}
+            <div className="flex items-center justify-between mb-6">
+              <h1 className="text-2xl font-bold text-red-600">QR Generator</h1>
               <button
                 onClick={() => setShowQRModal(false)}
-                className="text-gray-400 hover:text-gray-600"
+                className="w-8 h-8 rounded-full bg-gray-600 text-white flex items-center justify-center hover:bg-gray-700"
               >
                 <svg
                   className="w-5 h-5"
@@ -76,11 +115,70 @@ function Visitors() {
                 </svg>
               </button>
             </div>
-            <div className="p-6">
-              <div className="flex justify-center mb-6">
-                <div className="w-24 h-24 bg-red-500 rounded-full flex items-center justify-center">
+
+            {/* Form Fields */}
+            <div className="space-y-5">
+              {/* Name Field */}
+              <div>
+                <label className="text-sm text-gray-500 mb-1 block">Name</label>
+                <input
+                  type="text"
+                  name="name"
+                  value={qrFormData.name}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-3 bg-gray-50 rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-red-500"
+                  placeholder="Enter name"
+                />
+              </div>
+
+              {/* Contact Field */}
+              <div>
+                <label className="text-sm text-gray-500 mb-1 block">
+                  Contact
+                </label>
+                <input
+                  type="text"
+                  name="contact"
+                  value={qrFormData.contact}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-3 bg-gray-50 rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-red-500"
+                  placeholder="Enter contact"
+                />
+              </div>
+
+              {/* ID Number Field */}
+              <div>
+                <label className="text-sm text-gray-500 mb-1 block">
+                  ID Number
+                </label>
+                <input
+                  type="text"
+                  name="idNumber"
+                  value={qrFormData.idNumber}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-3 bg-gray-50 rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-red-500"
+                  placeholder="Enter ID number"
+                />
+              </div>
+
+              {/* Company Dropdown */}
+              <div className="relative">
+                <label className="text-sm text-gray-500 mb-1 block">
+                  Company
+                </label>
+                <div
+                  onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                  className="w-full px-4 py-3 bg-gray-50 rounded-lg text-gray-700 cursor-pointer flex items-center justify-between focus:outline-none focus:ring-2 focus:ring-red-500"
+                >
+                  <span
+                    className={
+                      qrFormData.company ? "text-gray-700" : "text-gray-400"
+                    }
+                  >
+                    {qrFormData.company || "Select a Company"}
+                  </span>
                   <svg
-                    className="w-12 h-12 text-white"
+                    className="w-5 h-5 text-gray-400"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -89,93 +187,77 @@ function Visitors() {
                       strokeLinecap="round"
                       strokeLinejoin="round"
                       strokeWidth="2"
-                      d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                      d="M19 9l-7 7-7-7"
                     />
                   </svg>
                 </div>
+
+                {/* Dropdown Menu */}
+                {isDropdownOpen && (
+                  <div className="absolute top-full mt-2 w-full bg-white rounded-lg shadow-xl border border-gray-200 z-10 max-h-64 overflow-y-auto">
+                    {companies.map((company, index) => (
+                      <div
+                        key={index}
+                        onClick={() => handleCompanySelect(company)}
+                        className="px-4 py-3 hover:bg-gray-50 cursor-pointer text-gray-700 border-b border-gray-100 last:border-b-0"
+                      >
+                        {company}
+                      </div>
+                    ))}
+
+                    {!showAddCompany ? (
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setShowAddCompany(true);
+                        }}
+                        className="w-full px-4 py-3 bg-red-600 text-white font-semibold hover:bg-red-700"
+                      >
+                        ADD NEW COMPANY
+                      </button>
+                    ) : (
+                      <div
+                        className="p-3 bg-gray-50"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <input
+                          type="text"
+                          value={newCompany}
+                          onChange={(e) => setNewCompany(e.target.value)}
+                          placeholder="Enter company name"
+                          className="w-full px-3 py-2 border border-gray-300 rounded mb-2 focus:outline-none focus:ring-2 focus:ring-red-500"
+                        />
+                        <div className="flex gap-2">
+                          <button
+                            onClick={handleAddCompany}
+                            className="flex-1 px-3 py-2 bg-red-600 text-white rounded hover:bg-red-700 text-sm font-semibold"
+                          >
+                            Add
+                          </button>
+                          <button
+                            onClick={() => {
+                              setShowAddCompany(false);
+                              setNewCompany("");
+                            }}
+                            className="flex-1 px-3 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 text-sm font-semibold"
+                          >
+                            Cancel
+                          </button>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
               </div>
-
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-xs text-gray-500 mb-1">
-                    Name
-                  </label>
-                  <input
-                    type="text"
-                    value={qrFormData.name}
-                    onChange={(e) =>
-                      setQrFormData({ ...qrFormData, name: e.target.value })
-                    }
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-red-500"
-                    placeholder="Enter name"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-xs text-gray-500 mb-1">
-                    Contact Number
-                  </label>
-                  <input
-                    type="text"
-                    value={qrFormData.contact}
-                    onChange={(e) =>
-                      setQrFormData({ ...qrFormData, contact: e.target.value })
-                    }
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-red-500"
-                    placeholder="Enter contact"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-xs text-gray-500 mb-1">
-                    ID Number
-                  </label>
-                  <input
-                    type="text"
-                    value={qrFormData.idNumber}
-                    onChange={(e) =>
-                      setQrFormData({ ...qrFormData, idNumber: e.target.value })
-                    }
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-red-500"
-                    placeholder="Enter ID"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-xs text-gray-500 mb-1">
-                    Company
-                  </label>
-                  <select
-                    value={qrFormData.company}
-                    onChange={(e) =>
-                      setQrFormData({ ...qrFormData, company: e.target.value })
-                    }
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-red-500 bg-white"
-                  >
-                    <option value="">Select a Company</option>
-                    <option value="Monchrome Infrastructures">
-                      Monchrome Infrastructures
-                    </option>
-                    <option value="SRP Infotech">SRP Infotech</option>
-                    <option value="Hindustan Petroleum">
-                      Hindustan Petroleum
-                    </option>
-                    <option value="Samsung Private Limited">
-                      Samsung Private Limited
-                    </option>
-                    <option value="Auccate">Auccate</option>
-                    <option value="Design.newagency">Design.newagency</option>
-                  </select>
-                </div>
-              </div>
-
-              <button
-                onClick={handleQRSubmit}
-                className="w-full mt-6 bg-red-500 hover:bg-red-600 text-white py-2.5 rounded-md text-sm font-medium"
-              >
-                Send QR Code
-              </button>
             </div>
+
+            {/* Send QR Code Button */}
+            <button
+              onClick={handleSubmitQR}
+              className="w-full mt-8 py-4 rounded-lg bg-red-600 hover:bg-red-700 text-white font-bold text-lg transition-all"
+            >
+              Send QR Code
+            </button>
           </div>
         </div>
       )}

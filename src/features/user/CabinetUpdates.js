@@ -64,84 +64,54 @@ function IDManagement() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
+    <div className="min-h-screen bg-gray-100 p-8">
       {/* Header */}
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-xl font-semibold text-gray-800">ID Management</h1>
+      <div className="flex items-center  mb-4">
+        <h1 className="text-2xl font-semibold  text-gray-700">ID Management</h1>
+
         <button
           onClick={() => setShowAddModal(true)}
-          className="bg-gray-800 hover:bg-gray-900 text-white px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2"
+          className="bg-gray-800 hover:bg-gray-900 ml-96 text-white px-3 py-1.5 rounded-md text-xs font-medium"
         >
-          Add
-          <svg
-            className="w-4 h-4"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M12 4v16m8-8H4"
-            />
-          </svg>
+          Add ID
         </button>
       </div>
 
       {/* ID Table */}
-      <div className="bg-white rounded-lg shadow overflow-hidden">
+      <div className="bg-white rounded-lg shadow-sm max-w-2xl">
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
-              <tr className="border-b border-gray-200">
-                <th className="text-left p-4 text-sm font-medium text-red-500">
+              <tr className="bg-white">
+                <th className="text-left px-6 py-3 text-xs font-medium text-red-500">
                   Uniq Number
                 </th>
-                <th className="text-left p-4 text-sm font-medium text-red-500">
+                <th className="text-left px-6 py-3 text-xs font-medium text-red-500">
                   ID Number
                 </th>
-                <th className="text-right p-4 text-sm font-medium text-red-500">
-                  Action
-                </th>
+                <th className="w-24"></th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="bg-gray-50">
               {idRecords.map((record) => (
-                <tr
-                  key={record.id}
-                  className="border-b border-gray-100 hover:bg-gray-50"
-                >
-                  <td className="p-4 text-sm text-gray-800">
+                <tr key={record.id} className="border-t border-gray-200">
+                  <td className="px-6 py-3 text-sm text-gray-700">
                     <div className="flex items-center gap-2">
                       {record.isActive && (
-                        <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                        <div className="w-1.5 h-1.5 bg-green-500 rounded-full"></div>
                       )}
                       {record.uniqNumber}
                     </div>
                   </td>
-                  <td className="p-4 text-sm text-gray-800">
+                  <td className="px-6 py-3 text-sm text-gray-700">
                     {record.idNumber}
                   </td>
-                  <td className="p-4 text-right">
+                  <td className="px-6 py-3">
                     <button
                       onClick={() => handleEdit(record)}
-                      className="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-full text-sm font-medium inline-flex items-center gap-1"
+                      className="bg-red-500 hover:bg-red-600 text-white px-4 py-1 rounded-full text-xs font-medium"
                     >
                       Edit
-                      <svg
-                        className="w-3 h-3"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
-                        />
-                      </svg>
                     </button>
                   </td>
                 </tr>
@@ -151,18 +121,18 @@ function IDManagement() {
         </div>
 
         {/* Pagination */}
-        <div className="flex items-center justify-center gap-2 p-4 border-t border-gray-200">
+        <div className="flex items-center justify-center gap-1 py-3 border-t border-gray-200 bg-white">
           <button
             onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
             disabled={currentPage === 1}
-            className={`w-8 h-8 rounded flex items-center justify-center ${
+            className={`w-7 h-7 rounded flex items-center justify-center text-xs ${
               currentPage === 1
                 ? "text-gray-300 cursor-not-allowed"
                 : "text-gray-600 hover:bg-gray-100"
             }`}
           >
             <svg
-              className="w-4 h-4"
+              className="w-3 h-3"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -176,11 +146,11 @@ function IDManagement() {
             </svg>
           </button>
 
-          {[1, 2, 3].map((page) => (
+          {[1, 2].map((page) => (
             <button
               key={page}
               onClick={() => setCurrentPage(page)}
-              className={`w-8 h-8 rounded text-sm font-medium ${
+              className={`w-7 h-7 rounded text-xs font-medium ${
                 currentPage === page
                   ? "bg-red-500 text-white"
                   : "text-gray-600 hover:bg-gray-100"
@@ -190,11 +160,11 @@ function IDManagement() {
             </button>
           ))}
 
-          <span className="text-gray-400 text-sm">...</span>
+          <span className="text-gray-400 text-xs px-1">...</span>
 
           <button
             onClick={() => setCurrentPage(totalPages)}
-            className={`w-8 h-8 rounded text-sm font-medium ${
+            className={`w-7 h-7 rounded text-xs font-medium ${
               currentPage === totalPages
                 ? "bg-red-500 text-white"
                 : "text-gray-600 hover:bg-gray-100"
@@ -208,14 +178,14 @@ function IDManagement() {
               setCurrentPage(Math.min(totalPages, currentPage + 1))
             }
             disabled={currentPage === totalPages}
-            className={`w-8 h-8 rounded flex items-center justify-center ${
+            className={`w-7 h-7 rounded flex items-center justify-center text-xs ${
               currentPage === totalPages
                 ? "text-gray-300 cursor-not-allowed"
                 : "text-gray-600 hover:bg-gray-100"
             }`}
           >
             <svg
-              className="w-4 h-4"
+              className="w-3 h-3"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -229,9 +199,9 @@ function IDManagement() {
             </svg>
           </button>
 
-          <button className="w-8 h-8 rounded flex items-center justify-center text-gray-600 hover:bg-gray-100 ml-2">
+          <button className="w-7 h-7 rounded flex items-center justify-center text-gray-600 hover:bg-gray-100 ml-1">
             <svg
-              className="w-5 h-5"
+              className="w-4 h-4"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"

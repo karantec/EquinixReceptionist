@@ -122,26 +122,29 @@ function Companies() {
     <div className="min-h-screen bg-gray-50 p-6">
       {/* Header */}
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-xl font-semibold text-gray-800">Companies</h1>
-        <button
-          onClick={handleOpenAddModal}
-          className="bg-gray-800 hover:bg-gray-900 text-white px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2"
-        >
-          Add
-          <svg
-            className="w-4 h-4"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
+        <div className="flex items-center justify-between mb-6">
+          <h1 className="text-xl font-semibold text-gray-800">Companies</h1>
+
+          <button
+            onClick={handleOpenAddModal}
+            className="bg-gray-800 hover:bg-gray-900 ml-96 text-white px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-4"
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M12 4v16m8-8H4"
-            />
-          </svg>
-        </button>
+            Add
+            <svg
+              className="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M12 4v16m8-8H4"
+              />
+            </svg>
+          </button>
+        </div>
       </div>
 
       {/* Companies List */}
@@ -224,7 +227,7 @@ function Companies() {
           <div className="bg-white rounded-lg shadow-xl w-full max-w-md">
             {/* Header */}
             <div className="flex justify-between items-center p-4 border-b border-gray-200">
-              <h2 className="text-lg font-semibold text-gray-800">
+              <h2 className="text-lg font-semibold text-red-600">
                 {editingCompany ? "Edit Company" : "Add New Company"}
               </h2>
               <button
@@ -266,14 +269,8 @@ function Companies() {
 
               <div className="flex gap-3">
                 <button
-                  onClick={handleCloseModal}
-                  className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 py-2.5 px-4 rounded-lg font-medium text-sm"
-                >
-                  Cancel
-                </button>
-                <button
                   onClick={handleSaveCompany}
-                  className="flex-1 bg-red-800 hover:bg-red-900 text-white py-2.5 px-4 rounded-lg font-medium text-sm"
+                  className="flex-1 bg-red-600  text-white py-2.5 px-4 rounded-lg font-medium text-sm"
                 >
                   {editingCompany ? "Update Company" : "Add Company"}
                 </button>
