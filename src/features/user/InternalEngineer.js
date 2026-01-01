@@ -88,7 +88,7 @@ function Visitors() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
+    <div className="min-h-screen bg-gray-50 p-6 max-w-full ">
       {/* QR Generator Modal */}
       {showQRModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
@@ -126,7 +126,7 @@ function Visitors() {
                   name="name"
                   value={qrFormData.name}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-3 bg-gray-50 rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-red-500"
+                  className="w-full px-4 py-3 bg-gray-50 rounded-lg text-gray-300 focus:outline-none focus:ring-2 focus:ring-red-500"
                   placeholder="Enter name"
                 />
               </div>
@@ -141,7 +141,7 @@ function Visitors() {
                   name="contact"
                   value={qrFormData.contact}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-3 bg-gray-50 rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-red-500"
+                  className="w-full px-4 py-3 bg-gray-50 rounded-lg text-gray-300 focus:outline-none focus:ring-2 focus:ring-red-500"
                   placeholder="Enter contact"
                 />
               </div>
@@ -156,7 +156,7 @@ function Visitors() {
                   name="idNumber"
                   value={qrFormData.idNumber}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-3 bg-gray-50 rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-red-500"
+                  className="w-full px-4 py-3 bg-gray-50 rounded-lg text-gray-300 focus:outline-none focus:ring-2 focus:ring-red-500"
                   placeholder="Enter ID number"
                 />
               </div>
@@ -168,7 +168,7 @@ function Visitors() {
                 </label>
                 <div
                   onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                  className="w-full px-4 py-3 bg-gray-50 rounded-lg text-gray-700 cursor-pointer flex items-center justify-between focus:outline-none focus:ring-2 focus:ring-red-500"
+                  className="w-full px-4 py-3 bg-gray-50 rounded-lg text-gray-300 cursor-pointer flex items-center justify-between focus:outline-none focus:ring-2 focus:ring-red-500"
                 >
                   <span
                     className={
@@ -199,7 +199,7 @@ function Visitors() {
                       <div
                         key={index}
                         onClick={() => handleCompanySelect(company)}
-                        className="px-4 py-3 hover:bg-gray-50 cursor-pointer text-gray-700 border-b border-gray-100 last:border-b-0"
+                        className="px-4 py-3 hover:bg-gray-50 cursor-pointer text-gray-300 border-b border-gray-100 last:border-b-0"
                       >
                         {company}
                       </div>
@@ -211,7 +211,7 @@ function Visitors() {
                           e.stopPropagation();
                           setShowAddCompany(true);
                         }}
-                        className="w-full px-4 py-3 bg-red-600 text-white font-semibold hover:bg-red-700"
+                        className="w-full px-4 py-3 bg-red-600 text-gray-300 font-semibold hover:bg-red-700"
                       >
                         ADD NEW COMPANY
                       </button>

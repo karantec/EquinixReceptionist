@@ -1,4 +1,4 @@
-const iconClasses = `h-6 w-6 text-white`;
+const iconClasses = `h-6 w-6 text-black hover:text-white `;
 
 const submenuIconClasses = `h-5 w-5`;
 

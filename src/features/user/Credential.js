@@ -59,46 +59,36 @@ function Companies() {
     setEditingCompany(company);
     setFormData({
       name: company.name,
-      industry: company.industry || "",
-      location: company.location || "",
-      employees: company.employees || "",
+      industry: company.industry,
+      location: company.location,
+      employees: company.employees,
     });
     setShowModal(true);
     setOpenMenuId(null);
   };
 
   const handleSaveCompany = () => {
-    if (formData.name.trim()) {
-      if (editingCompany) {
-        // Update existing company
-        setCompanies(
-          companies.map((c) =>
-            c.id === editingCompany.id
-              ? {
-                  ...c,
-                  name: formData.name.trim(),
-                  industry: formData.industry.trim(),
-                  location: formData.location.trim(),
-                  employees: formData.employees
-                    ? parseInt(formData.employees)
-                    : 0,
-                }
-              : c
-          )
-        );
-      } else {
-        // Add new company
-        const newCompany = {
-          id: companies.length + 1,
-          name: formData.name.trim(),
-          industry: formData.industry.trim(),
-          location: formData.location.trim(),
-          employees: formData.employees ? parseInt(formData.employees) : 0,
-        };
-        setCompanies([...companies, newCompany]);
-      }
-      handleCloseModal();
+    if (!formData.name.trim()) return;
+
+    if (editingCompany) {
+      setCompanies(
+        companies.map((c) =>
+          c.id === editingCompany.id
+            ? { ...c, ...formData, employees: Number(formData.employees || 0) }
+            : c
+        )
+      );
+    } else {
+      setCompanies([
+        ...companies,
+        {
+          id: Date.now(),
+          ...formData,
+          employees: Number(formData.employees || 0),
+        },
+      ]);
     }
+    handleCloseModal();
   };
 
   const handleCloseModal = () => {
@@ -108,107 +98,80 @@ function Companies() {
   };
 
   const handleDeleteCompany = (id) => {
-    if (window.confirm("Are you sure you want to delete this company?")) {
+    if (window.confirm("Delete this company?")) {
       setCompanies(companies.filter((c) => c.id !== id));
       setOpenMenuId(null);
     }
   };
 
-  const handleInputChange = (field, value) => {
-    setFormData({ ...formData, [field]: value });
-  };
-
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
-      {/* Header */}
-      <div className="flex justify-between items-center mb-6">
+    <div className="min-h-screen  p-6">
+      <div className="max-w-2xl">
+        {/* Header */}
         <div className="flex items-center justify-between mb-6">
-          <h1 className="text-xl font-semibold text-gray-800">Companies</h1>
-
+          <h1 className="text-base font-medium text-gray-900">Companies</h1>
           <button
             onClick={handleOpenAddModal}
-            className="bg-gray-800 hover:bg-gray-900 ml-96 text-white px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-4"
+            className="bg-gray-800 hover:bg-gray-900 text-white px-3 py-1.5 rounded-md text-sm font-medium flex items-center gap-2"
           >
             Add
-            <svg
-              className="w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M12 4v16m8-8H4"
-              />
-            </svg>
+            <img
+              src="/icons/iconsax-add.png"
+              alt="Close"
+              className="w-8 h-8 p-1 rounded-md"
+            />
           </button>
         </div>
-      </div>
 
-      {/* Companies List */}
-      <div className="space-y-4 max-w-3xl">
-        {companies.map((company) => (
-          <div
-            key={company.id}
-            className="bg-white rounded-lg shadow p-4 hover:shadow-md transition-shadow"
-          >
-            <div className="flex justify-between items-center">
-              <p className="text-sm text-gray-800">{company.name}</p>
+        {/* Companies List */}
+        <div className="space-y-3">
+          {companies.map((company) => (
+            <div
+              key={company.id}
+              className="bg-white rounded-lg shadow-sm border border-gray-200 px-6 py-4 flex justify-between items-center hover:shadow-md transition-shadow"
+            >
+              <p className="text-sm text-gray-900 font-normal">
+                {company.name}
+              </p>
+
               <div className="relative">
                 <button
                   onClick={() =>
                     setOpenMenuId(openMenuId === company.id ? null : company.id)
                   }
-                  className="text-gray-600 hover:text-gray-800 p-2"
+                  className="p-1 text-gray-500 hover:text-gray-700 text-lg leading-none"
                 >
-                  <svg
-                    className="w-5 h-5"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" />
-                  </svg>
+                  ⋮
                 </button>
 
-                {/* Dropdown Menu */}
                 {openMenuId === company.id && (
-                  <div className="absolute right-0 mt-2 w-32 bg-white rounded-lg shadow-lg border border-gray-200 z-10">
+                  <div className="absolute right-0 mt-2 w-36 bg-white rounded-lg shadow-lg border border-gray-200 overflow-hidden z-10">
                     <button
                       onClick={() => handleOpenEditModal(company)}
-                      className="w-full flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded-t-lg"
-                    >
-                      <svg
-                        className="w-4 h-4 text-red-500"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
-                        />
-                      </svg>
-                      <span className="text-red-500">Edit</span>
-                    </button>
-                    <button
-                      onClick={() => handleDeleteCompany(company.id)}
-                      className="w-full flex items-center gap-2 px-4 py-2 text-sm text-white bg-red-500 hover:bg-red-600 rounded-b-lg"
+                      className="w-full px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 text-left flex items-center gap-2"
                     >
                       <svg
                         className="w-4 h-4"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                      >
+                        <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+                      </svg>
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => handleDeleteCompany(company.id)}
+                      className="w-full px-4 py-2.5 text-sm bg-red-500 text-white hover:bg-red-600 text-left flex items-center gap-2"
+                    >
+                      <svg
+                        className="w-4 h-4"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
                       >
                         <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                          fillRule="evenodd"
+                          d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                          clipRule="evenodd"
                         />
                       </svg>
                       Delete
@@ -217,25 +180,24 @@ function Companies() {
                 )}
               </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
 
-      {/* Add/Edit Company Modal */}
+      {/* Modal */}
       {showModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-lg shadow-xl w-full max-w-md">
-            {/* Header */}
-            <div className="flex justify-between items-center p-4 border-b border-gray-200">
-              <h2 className="text-lg font-semibold text-red-600">
-                {editingCompany ? "Edit Company" : "Add New Company"}
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-xl w-full max-w-md shadow-xl">
+            <div className="flex justify-between items-center px-6 py-4 border-b border-gray-200">
+              <h2 className="text-lg font-semibold text-red-500">
+                {editingCompany ? "Edit Company" : "Add Company"}
               </h2>
               <button
                 onClick={handleCloseModal}
                 className="text-gray-400 hover:text-gray-600"
               >
                 <svg
-                  className="w-5 h-5"
+                  className="w-6 h-6"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -243,38 +205,88 @@ function Companies() {
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    strokeWidth="2"
+                    strokeWidth={2}
                     d="M6 18L18 6M6 6l12 12"
                   />
                 </svg>
               </button>
             </div>
 
-            {/* Content */}
-            <div className="p-6">
-              <div className="space-y-4 mb-6">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Company Name *
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.name}
-                    onChange={(e) => handleInputChange("name", e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
-                    placeholder="Enter company name"
-                  />
-                </div>
+            <div className="px-6 py-5 space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Company Name
+                </label>
+                <input
+                  type="text"
+                  placeholder="Enter company name"
+                  value={formData.name}
+                  onChange={(e) =>
+                    setFormData({ ...formData, name: e.target.value })
+                  }
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                />
               </div>
 
-              <div className="flex gap-3">
-                <button
-                  onClick={handleSaveCompany}
-                  className="flex-1 bg-red-600  text-white py-2.5 px-4 rounded-lg font-medium text-sm"
-                >
-                  {editingCompany ? "Update Company" : "Add Company"}
-                </button>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Industry
+                </label>
+                <input
+                  type="text"
+                  placeholder="Enter industry"
+                  value={formData.industry}
+                  onChange={(e) =>
+                    setFormData({ ...formData, industry: e.target.value })
+                  }
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                />
               </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Location
+                </label>
+                <input
+                  type="text"
+                  placeholder="Enter location"
+                  value={formData.location}
+                  onChange={(e) =>
+                    setFormData({ ...formData, location: e.target.value })
+                  }
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Employees
+                </label>
+                <input
+                  type="number"
+                  placeholder="Enter number of employees"
+                  value={formData.employees}
+                  onChange={(e) =>
+                    setFormData({ ...formData, employees: e.target.value })
+                  }
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                />
+              </div>
+            </div>
+
+            <div className="flex gap-3 px-6 py-4 border-t border-gray-200">
+              <button
+                onClick={handleCloseModal}
+                className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 py-2.5 px-4 rounded-lg font-medium text-sm"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleSaveCompany}
+                className="flex-1 bg-red-500 hover:bg-red-600 text-white py-2.5 px-4 rounded-lg font-medium text-sm"
+              >
+                {editingCompany ? "Update" : "Add"}
+              </button>
             </div>
           </div>
         </div>
