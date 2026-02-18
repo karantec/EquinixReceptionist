@@ -65,46 +65,51 @@ function Dashboard() {
       </div>
 
       {/* Stats Cards */}
-      <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-6 mb-8">
-        {/* Today Visitors Card */}
-        <div className="bg-white rounded-lg shadow p-6">
-          <div className="flex items-start gap-3 mb-6">
-            <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
-              <svg
-                className="w-6 h-6 text-green-500"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                />
-              </svg>
-            </div>
-            <span className="text-gray-600 text-sm mt-2">Today Visitors</span>
+      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 max-w-[400px] mt-4">
+        {/* Header Section */}
+        <div className="flex items-center gap-4 mb-8">
+          <div className="w-14 h-14 bg-[#e8fbf3] rounded-2xl flex items-center justify-center">
+            <svg
+              className="w-10 h-10 text-[#00c853]"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="1.5"
+                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+              />
+            </svg>
           </div>
-          <div className="flex items-end justify-between">
-            <div className="text-5xl font-bold text-gray-800">243</div>
-            <div className="flex items-end gap-0.5 h-16 mb-1">
-              {chartData.map((height, idx) => (
-                <div
-                  key={idx}
-                  className={`w-2 ${
-                    idx === chartData.length - 1 ? "bg-gray-800" : "bg-gray-300"
-                  } rounded-sm`}
-                  style={{ height: `${(height / 65) * 100}%` }}
-                ></div>
-              ))}
-            </div>
+          <span className="text-[#333] text-2xl font-semibold">
+            Total Visitors
+          </span>
+        </div>
+
+        {/* Stats and Chart Section */}
+        <div className="flex items-end justify-between">
+          <div className="text-6xl font-bold text-[#2d2d2d] tracking-tight">
+            243
+          </div>
+
+          {/* Bar Chart - Symmetrical wave pattern */}
+          <div className="flex items-end gap-[3px] h-20 pb-1">
+            {[30, 45, 60, 80, 95, 100, 85, 70, 55, 40].map((height, idx) => (
+              <div
+                key={idx}
+                className={`w-[10px] rounded-full transition-all ${
+                  idx === 5 ? "bg-[#2d2d2d]" : "bg-gray-200"
+                }`}
+                style={{ height: `${height}%` }}
+              ></div>
+            ))}
           </div>
         </div>
       </div>
-
       {/* Visitor Table */}
-      <div className="bg-white rounded-3xl shadow-sm p-4 w-[80%]">
+      <div className="bg-white rounded-3xl shadow-sm p-8 w-[80%] mt-4">
         {" "}
         {/* Increased padding for the "frame" effect */}
         <div className="">

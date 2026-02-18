@@ -88,7 +88,7 @@ function Visitors() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6 max-w-full ">
+    <div className="min-h-screen bg-gray-50 p-2 max-w-full ">
       {/* QR Generator Modal */}
       {showQRModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
@@ -263,16 +263,17 @@ function Visitors() {
       )}
 
       {/* Header */}
-      <div className="mb-6">
+      <div className="mb-1">
         <h1 className="text-2xl font-semibold text-gray-800">Visitors</h1>
       </div>
 
       {/* Total Visitors Card */}
-      <div className="bg-white rounded-lg shadow p-6 mb-6 max-w-xs">
-        <div className="flex items-start gap-3 mb-6">
-          <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 max-w-[400px] mt-4">
+        {/* Header Section */}
+        <div className="flex items-center gap-4 mb-8">
+          <div className="w-14 h-14 bg-[#e8fbf3] rounded-2xl flex items-center justify-center">
             <svg
-              className="w-6 h-6 text-green-500"
+              className="w-10 h-10 text-[#00c853]"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -280,23 +281,31 @@ function Visitors() {
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                strokeWidth="2"
+                strokeWidth="1.5"
                 d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
               />
             </svg>
           </div>
-          <span className="text-gray-600 text-sm mt-2">Total Visitors</span>
+          <span className="text-[#333] text-2xl font-semibold">
+            Total Visitors
+          </span>
         </div>
+
+        {/* Stats and Chart Section */}
         <div className="flex items-end justify-between">
-          <div className="text-5xl font-bold text-gray-800">243</div>
-          <div className="flex items-end gap-0.5 h-16 mb-1">
-            {chartData.map((height, idx) => (
+          <div className="text-6xl font-bold text-[#2d2d2d] tracking-tight">
+            243
+          </div>
+
+          {/* Bar Chart - Symmetrical wave pattern */}
+          <div className="flex items-end gap-[3px] h-20 pb-1">
+            {[30, 45, 60, 80, 95, 100, 85, 70, 55, 40].map((height, idx) => (
               <div
                 key={idx}
-                className={`w-2 ${
-                  idx === chartData.length - 1 ? "bg-gray-800" : "bg-gray-300"
-                } rounded-sm`}
-                style={{ height: `${(height / 65) * 100}%` }}
+                className={`w-[10px] rounded-full transition-all ${
+                  idx === 5 ? "bg-[#2d2d2d]" : "bg-gray-200"
+                }`}
+                style={{ height: `${height}%` }}
               ></div>
             ))}
           </div>
@@ -304,19 +313,19 @@ function Visitors() {
       </div>
 
       {/* Visitors Table */}
-      <div className="bg-white rounded-3xl shadow-sm p-10 max-w-5xl">
+      <div className="bg-white rounded-3xl shadow-sm p-4 max-w-5xl mt-6">
         <div className="overflow-x-auto">
           <table className="w-full border-separate border-spacing-y-0">
             <thead>
               {/* Gray pill-shaped header row */}
               <tr className="bg-gray-50/80">
-                <th className="text-left py-5 px-10 text-sm font-semibold text-red-500 first:rounded-l-2xl w-1/3">
+                <th className="text-left py-5 px-10 text-md font-normal  text-red-500 first:rounded-l-2xl w-1/3">
                   Visitor Name
                 </th>
-                <th className="text-left py-5 px-10 text-sm font-semibold text-red-500 w-1/3">
+                <th className="text-left py-5 px-10 text-md font-normal  text-red-500 w-1/3">
                   Phone Number
                 </th>
-                <th className="text-center py-5 px-10 text-sm font-semibold text-red-500 last:rounded-r-2xl w-1/3">
+                <th className="text-center py-5 px-10 text-md  font-normal text-red-500 last:rounded-r-2xl w-1/3">
                   {/* Action header left empty as per screenshot */}
                 </th>
               </tr>
