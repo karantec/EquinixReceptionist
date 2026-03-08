@@ -192,7 +192,7 @@ function Companies() {
                   <div className="absolute left-full top-0 ml-1 z-10 bg-white border border-gray-100 rounded-xl shadow-lg p-2 flex flex-col gap-2 w-40">
                     <button
                       onClick={() => handleOpenEditModal(company)}
-                      className="w-full py-2 px-4 rounded-lg border border-red-200 text-red-500 bg-white text-sm font-medium flex items-center justify-center gap-2 hover:bg-gray-50"
+                      className="w-full py-2 px-6 rounded-lg border border-red-200 text-red-500 bg-white text-sm font-medium flex items-center justify-center gap-2 hover:bg-gray-50"
                     >
                       <svg
                         className="w-3.5 h-3.5"
@@ -205,7 +205,7 @@ function Companies() {
                     </button>
                     <button
                       onClick={() => handleDeleteCompany(company.id)}
-                      className="w-full py-2 px-4  rounded-lg bg-red-500 text-white text-sm font-medium flex items-center justify-center gap-2 hover:bg-red-600"
+                      className="w-full py-2 px-6 rounded-lg bg-red-500 text-white text-sm font-medium flex items-center justify-center gap-2 hover:bg-red-600"
                     >
                       <svg
                         className="w-3.5 h-3.5"
