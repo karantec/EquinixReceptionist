@@ -17,7 +17,7 @@ export default function Login() {
     setLoading(true);
     localStorage.setItem("token", "DummyTokenHere");
     setLoading(false);
-    window.location.href = "/app/welcome";
+    window.location.href = "/app/dashboard";
   };
 
   const updateFormValue = (field, value) => {
